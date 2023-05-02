@@ -1,0 +1,115 @@
+﻿@{
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml"; ;
+}
+<link href="@Url.Content("~/Assist/Css/HomePageCss.css")" rel="stylesheet" type="text/css" />
+
+<div class="wrapper">
+    @*<span class="icon-close">
+            <ion-icon name="close-outline"></ion-icon>
+        </span>*@
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form action="#" name="PostForm" method="post">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="LoginEmail" required>
+                <label for="">Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="LoginPassword" minlength="8" required>
+                <label for="">Password</label>
+            </div>
+            <div class="rember-forgot">
+                <label>
+                    <input type="checkbox" />
+                    Rember me
+                </label>
+                <a href="#" class="forgot-link"> forgot Password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            @if (TempData["message"] != null)
+            {
+                    <script type="text/javascript">
+                        var message = @Html.Raw(Json.Encode(TempData["message"]));
+                        alert(message);
+                    </script>
+            }
+            <div class="login-register">
+                <p>Don't have an account?<a href="#" class="register-link" name="LoginBtn">Register</a></p>
+
+            </div>
+        </form>
+    </div>
+    <div class="form-box register">
+        <h2>Registrtion</h2>
+        <form action="#" name="PostForm" method="post">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                <input type="text" name="RegisterUserName" required>
+                <label for="">UserName</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="RegisterEmail" required>
+                <label for="">Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="RegisterPassword" minlength="8" required>
+                <label for="">Password</label>
+            </div>
+            <div class="rember-forgot">
+                <label>
+                    <input type="checkbox" />接受同意書
+                </label>
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="login-register">
+                <p>Already have an account?<a href="" class="login-link" name="RegisterBtn">Login</a></p>
+
+            </div>
+        </form>
+    </div>
+    <div class="form-box forgot">
+        <h2>ForgotPassword</h2>
+        <form action="#" name="PostForm" method="post">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                <input type="text" name="ForgotUserName" required>
+                <label for="">UserName</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="ForgotEmail" required>
+                <label for="">Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="NewPassword" minlength="8" required>
+                <label for="">NewPassword</label>
+            </div>         
+            <button type="submit" class="btn">ChangePassword</button>
+            <div class="login-register">
+                <p>Return to the Login Page?<a href="" class="login-link" name="RegisterBtn">Return</a></p>
+              
+
+            </div>
+        </form>
+    </div>
+
+</div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="~/Assist/Js/script.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+
+    $('#LoginBtn').click(function () {
+
+      
+
+
+    });
+    </script>

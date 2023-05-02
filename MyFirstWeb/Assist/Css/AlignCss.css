@@ -1,0 +1,79 @@
+﻿.wrapper {
+    position: relative;
+    height:12.5%;
+    background: transparent;
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    transition: .2s ease;
+}
+.inline-block { /*類別名稱*/
+    display: inline-block;
+    /*border: 1px solid blue;*/
+    margin: 1px;
+    position: relative;
+    top: 15%;
+    left: 10%;
+    transform: translateY(10%);
+}
+.clearfix::after { /*偽元素(Pseudo-Element)*/
+    content: "";
+    clear: both;
+    display: table;
+}
+/*偽類別(Pseudo-Class)*/
+/*element:nth-child(n)->所選取到的 element，其第 n 個 element 會有相對應的樣式
+    element:hover ->hover 的動作就是指讓滑鼠游標移動到 element 上
+ */
+.item:nth-child(1) { 
+    color: aqua;
+}
+.btnPlaying {
+    margin:10px;
+   display :flex;
+   width:250px;
+   height:50px;
+   font-size:40px;
+   background-color:aqua;
+}
+    .btnPlaying:hover {
+        background-color:burlywood;
+        color:black;
+
+    }
+textarea {
+    vertical-align:baseline;
+    resize:none;
+    font-size:20px;
+    white-space:pre-line;
+    flex-wrap:wrap;
+}
+.image-bg-4 {
+    position: relative;
+    background-size: cover;
+    background-image: url(../../images/bg2.jpg);
+}
+
+    .image-bg-4::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .image-bg-4 .content {
+        position: relative;
+    }
+.Page {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    position: relative;
+}
+.labRequest {
+    font-size:45px;
+}

@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_Gaming.cshtml";
+    ViewBag.Title = "NuNu";
+
+
+
+
+    Random myObject = new Random();
+    var account = "";
+    //if (Session["account"] == null || string.IsNullOrWhiteSpace(Session["account"].ToString()))
+    //{
+    //    account = "Test";
+    //}
+
+    //if (Session["account"] == null || string.IsNullOrWhiteSpace(Session["account"].ToString()))
+    //{
+    //    Response.Redirect("~/Home/Login");
+    //}
+    //else
+    //{
+    //    account = Session["account"].ToString();
+    //}
+}
+@model List<MyFirstWeb.Models.Player>
+<form style="margin:auto" method="post">
+    <div class="Page">
+
+        <h1 align="center" style="color:cadetblue">請輸入遊戲參數</h1>
+
+        <div class="wrapper">
+            <h3>A Player</h3>
+            <div class="inline-block">
+                
+                <textarea style="width:200px;height:125px;" id="bodylist1" name="bodylist1" cols="1" rows="5"  placeholder ="請輸入身體部位"></textarea>
+            </div>
+            <div class="inline-block">
+                
+                <textarea style="width:200px;height:125px;" id="colorList1" name="colorlist1" cols="1" rows="5" placeholder ="輸入接觸位置"></textarea>
+            </div>
+        </div>
+        <div class="wrapper">
+
+            <h3>B Player</h3>
+            <div class="inline-block">
+                <textarea style="width:200px;height:125px;" id="bodyList2" name="bodylist2" cols="1" rows="5" placeholder ="請輸入身體部位"></textarea>
+            </div>
+            <div class="inline-block">
+                <textarea style="width:200px;height:125px;" id="colorList2" name="colorlist2" cols="1" rows="5" placeholder ="輸入接觸位置"></textarea>
+            </div>
+        </div>
+        <div class="wrapper">
+            <button type="submit" class="btnPlaying">開始</button><br>
+            <button type="button" class="btnPlaying" id="nextGame">NextGaming</button>
+        </div>
+        <br>
+        @if (Model != null)
+        {
+            <label class="labRequest" id="labA" name="labA">
+                @Model[0].PlayerID Please @Model[0].BodyList[myObject.Next(0, Model[0].BodyList.Count)]
+                touch   @Model[0].ColorList[myObject.Next(0, Model[0].ColorList.Count)]
+            </label><br>
+            <label class="labRequest" id="labB" name="labB">
+                @Model[1].PlayerID Please @Model[1].BodyList[myObject.Next(0, Model[1].BodyList.Count)]
+                touch   @Model[1].ColorList[myObject.Next(0, Model[1].ColorList.Count)]
+            </label>
+            <br>
+        }
+    </div>
+</form>
+
+<script>
+   
+    $('#nextGame').click(function () {
+
+        var yourModel = '@Html.Raw(Json.Encode(Model))';
+        var member = JSON.parse(yourModel);
+        //alert(member[0].BodyList.length);
+        //alert(getRandom(member[0].BodyList.length));
+        $('#labA').text(member[0].PlayerID + " Please " + member[0].BodyList[getRandom(member[0].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1])
+        $('#labB').text((member[1].PlayerID + " Please " + member[1].BodyList[getRandom(member[1].BodyList.length) - 1] + " touch " + member[1].ColorList[getRandom(member[1].ColorList.length) - 1]))
+
+        //alert(yourModel);
+
+
+    });
+
+</script>
+
+
+

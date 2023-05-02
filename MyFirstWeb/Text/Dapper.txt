@@ -1,0 +1,96 @@
+﻿<Query>
+	using var conn = new SqlConnection("ConnectionString");
+	var sql = "SELECT * FROM Users";
+	var results = conn.Query<Users>(sql).ToList();
+		 QueryFirst() 取回符合條件的第一筆資料，如果沒有符合會拋出錯誤
+		 QueryFirstOrDefault() 會將符合條件的第一筆回傳回來，如果沒有符合回傳 null
+		 QuerySingle() 查詢唯一符合條件的資料，如果沒有符合或符合條件為多筆時會拋出錯誤
+		 QuerySingleOrDefault()，查詢唯一符合條件的資料，如果沒有符合回傳 null，但如果符合條件為多筆時會拋出錯誤
+	// QueryMultiple
+	var sql = "SELECT * FROM Users; SELECT * FROM Account;";
+	using var conn = new SqlConnection("ConnectionString");
+		using var results = conn.QueryMultiple(sql);
+		var users = results.Read<Users>().ToList();
+		var accounts = results.Read<Account>().ToList();
+<使用 Parameter​ 參數查詢>
+//參數
+	using var conn = new SqlConnection("ConnectionString");
+	var results = conn.Execute("MyStoredProcedure",new[] { new { Param1 = 1, Param2 = " ImParam" }, new { Param1 = 2, Param2 = " N2" } },
+		commandType: CommandType.StoredProcedure);
+// Dynamic
+	using var conn = new SqlConnection("ConnectionString");
+	var parameters = new DynamicParameters();
+	parameters.Add("@Param1", "abc", DbType.String, ParameterDirection.Input);
+	parameters.Add("@Return1", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+	conn.Execute("MyStoredProcedure", parameters, commandType: CommandType.StoredProcedure);
+	int result = parameters.Get<int>("@Return1");
+// List
+	using var conn = new SqlConnection("ConnectionString");
+	string sql = "SELECT * FROM Users WHERE UserId IN @ids";
+	var results = conn.Query<Users>(sql, listModel).ToList();
+// String
+	using var conn = new SqlConnection("ConnectionString");
+	var sql = "SELECT * FROM Users WHERE UserId = @id";
+	var results = conn.Query<Users>(sql,new { id = new DbString { Value = "002", IsFixedLength = false, Length = 3, IsAnsi = true } }).ToList();
+	// Dapper 如果使用暱名型別預設 String 會轉成 NVARCHAR，效能會稍差，指定型別效能比較好
+<Execute>:用於執行 Insert、Update、Delete、Stored Procedure 時。
+// Stored Procedure
+	using var conn = new SqlConnection("ConnectionString");
+	var parameters = new DynamicParameters();
+	parameters.Add("@Param1", "abc", DbType.String, ParameterDirection.Input);
+	parameters.Add("@OutPut1", dbType: DbType.Int32, direction: ParameterDirection.Output);
+	parameters.Add("@Return1", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+	conn.Execute("MyStoredProcedure", parameters, commandType: CommandType.StoredProcedure);
+	var outputResult = parameters.Get<int>("@OutPut1");
+	var returnResult = parameters.Get<int>("@Return1");
+	// Stored Procedure 會用到的 input、output、return 都可以用
+// INSERT statement
+	using var conn = new SqlConnection("ConnectionString");
+	var sql = "INSERT INTO Users(col1,col2) VALUES (@c1,@c2);";
+	var datas = new[]{
+		new { c1 = "A", c2 = "A2" },
+		new { c1 = "B", c2 = "B2" },
+		new { c1 = "C", c2 = "C2" }
+	};
+	conn.Execute(sql, datas);
+// UPDATE statement
+	using var conn = new SqlConnection("ConnectionString");
+	var strSql = " UPDATE Users SET col1=@c1 WHERE col2=@c2";
+	var datas = new[]{
+		new { c1 = "A", c2 = "A2" },
+		new { c1 = "B", c2 = "B2" },
+		new { c1 = "C", c2 = "C2" }
+	};
+	conn.Execute(strSql, datas);
+// DELETE statement
+	using var conn = new SqlConnection("ConnectionString");
+	var sql = " DELETE Users WHERE col2=@c2";
+	var datas = new[]{
+		new {c2 = "A2" },
+		new {c2 = "B2" },
+		new {c2 = "C2" }
+	};
+	conn.Execute(sql, datas);
+<Transaction​ 交易>
+// Transaction	// 單一資料庫時建議使用(效能較好)
+	using var transaction = conn.BeginTransaction();
+	using var conn = new SqlConnection("ConnectionString");
+	var sql = " UPDATE Users SET col1=@c1 WHERE col2=@c2";
+	var datas = new[]{
+		new { c1 = "A", c2 = "A2" },
+		new { c1 = "B", c2 = "B2" },
+		new { c1 = "C", c2 = "C2" }
+	};
+	conn.Execute(sql, datas,transaction: Systranscation);
+	transaction.Commit();
+// TransactionScope	// 用於異質資料庫交易
+	using var conn = new SqlConnection("ConnectionString");
+	using var transactionScope = new TransactionScope();
+	var sql = " UPDATE Users SET col1=@c1 WHERE col2=@c2";
+	var datas = new[]{
+				new { c1 = "A", c2 = "A2" },
+				new { c1 = "B", c2 = "B2" },
+				new { c1 = "C", c2 = "C2" }
+			};
+	conn.Execute(sql, datas,transaction: Systranscation);
+	transactionScope.Complete();

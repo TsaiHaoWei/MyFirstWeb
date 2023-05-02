@@ -1,0 +1,41 @@
+﻿資料夾內容介紹
+App_Data 以前是ASP.NET設計來放資料庫相關檔案的地方。
+App_Start 裡面微軟有放一些一開始就會執行的東西。
+Content跟Scripts 放一些CSS跟JS檔案的地方，當然也會有JQuery。(應該說BootStrap本來就是要載入JQuery才能用)
+fonts是字型相關的資料夾
+Controllers就是放控制器的地方，Views是放頁面的地方，MVC的網頁是從Controller開始跑，
+然後才跑到View，有Controller不一定要有相對應的View，不過View要顯示出來一定要有Controller去呼叫它(名稱不一定要一樣)
+Models資料夾就是放Model的地方，這部分我們之後會有比較詳細的說明
+Controller跟View是一對一的，也就是說Views底下有一個Home資料夾，Controllers底下就會有一個HomeController，這兩個是成對的。
+
+首頁位置
+Views -> Shared 預設就會載入_Layout.cshtml當作主版頁面。
+Views -> Home index.cshtml，這也是MVC預設的首頁，可以在App_Start資料夾中的RouteConfig.cs檔案裡面改首頁
+
+Views Coding
+
+<!--
+<style>
+    div {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div>
+    現在時間: @date.ToString("yyyy/MM/dd HH:mm:ss")
+</div>
+
+<div>
+    學生成績: @student.ToString()
+</div>
+
+<div>
+    學生成績列表:
+</div>
+@for (int i = 0; i < list.Count; i++)
+{
+    <div>
+        @list[i].ToString()
+    </div>
+}
+-->

@@ -1,0 +1,132 @@
+﻿ 
+@*資料傳到/Home/Transcripts，MVC會先去執行HomeController的Transcripts函式*@
+@*@{
+    ViewBag.Title = "Home Page";
+    Layout = null; 預設FontPage樣式
+
+    var date = ViewBag.Date;
+    var student = ViewBag.Student;
+    var list = ViewBag.List;
+    var listCity = ViewBag.list;
+
+}
+
+
+@model MyFirstWeb.Models.Student
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<form style="margin-left:10px;" method="post" action="/Home/Transcripts">
+    <div class="form-group">
+        <label for="exampleInputEmail1">學號</label>
+        <input type="text" class="form-control" id="id" name="id" aria-describedby="emailHelp" placeholder="Enter email" value="@Model.id">
+        <small id="emailHelp" class="form-text text-muted">請輸入數字</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">姓名</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Password" value="@Model.name">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">分數</label>
+        <input type="text" class="form-control" id="score" name="score" aria-describedby="emailHelp" placeholder="Enter email" value="@Model.score">
+    </div>
+    <button type="submit" class="btn btn-primary">確定</button>
+</form>*@
+@*<div>
+    @foreach (var v in listCity)
+    {
+        @Html.Raw($"代號: {v.id},名稱 :{v.name}")
+    }
+</div>*@
+
+
+
+@* Ajax 前端設計業面
+    傳統的Web應用允許使用者端填寫表單（form），當送出表單時就向網頁伺服器傳送一個請求。伺服器接收並處理傳來的表單，然後送回一個新的網頁，但這個做法浪費了許多頻寬，因為在前後兩個頁面中的大部分HTML碼往往是相同的。由於每次應用的溝通都需要向伺服器傳送請求，應用的回應時間依賴於伺服器的回應時間。這導致了使用者介面的回應比本機應用慢得多。
+
+    與此不同，AJAX應用可以僅向伺服器傳送並取回必須的資料，並在客戶端採用JavaScript處理來自伺服器的回應。因為在伺服器和瀏覽器之間交換的資料大量減少，伺服器回應更快了。同時，很多的處理工作可以在發出請求的客戶端機器上完成，因此Web伺服器的負荷也減少了。
+*@
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+
+    var cityList = ViewBag.CityList;
+    var VillageList = ViewBag.VillageList;
+    var Msg = ViewBag.Msg;
+    }
+    @model MyFirstWeb.Models.ViewModel.UserData
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+<form style="margin:auto" method="post">
+    <h1>請輸入使用者資料</h1>
+    <div class="form-group">
+        <label for="exampleInputEmail1">註冊帳號</label>
+        <input type="text" class="form-control" id="Account" name="account" placeholder="輸入帳號" value="@Model.account">
+        <small id="emailHelp" class="form-text text-muted">請輸入英數字</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">新的密碼</label>
+        <input type="password" class="form-control" id="Password1" name="password1" placeholder="輸入密碼" value="@Model.password1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">再次確認</label>
+        <input type="password" class="form-control" id="Password2" name="password2" placeholder="輸入密碼" value="@Model.password2">
+    </div>
+    <div class="form-group">
+        <label for="Address">地址</label>
+        <select id="city" name="city">
+            <option value="@Model.city">全部</option>
+            @foreach (var v in cityList)
+            {
+                <option value="@v.id">@v.name</option>
+            }
+        </select>
+        <select id="village" name="village">
+            <option value="@Model.village">城鎮</option>
+        </select>
+        <input type="text" class="form-control" id="Address" name="address" placeholder="輸入地址" value="@Model.address">
+    </div>
+    <button type="submit" class="btn btn-primary">確定</button>
+    <button type="reset" class="btn btn-warning">清除</button>
+    <button type="button" class="btn btn-danger" onclick="ReLogin()">取消</button>
+</form>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    function ReLogin() {
+        location.href = "/Home/Login";
+    }
+</script>
+ <script>
+        $("#city").change(function () {
+            var value = $("#city").val();
+            console.log(value);
+            $.ajax({
+                type: "Post",
+                url: "../Home/Village?id=" + value,
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#village").empty();
+                    if (data == "") {
+                        $("#village").append("<option value=''>請選擇縣市</option>");
+                    }
+                    else {
+                        var jo = JSON.parse(data);
+                        $("#village").append("<option value=''>請選擇</option>");
+                        for (i = 0; i < jo.length; i++) {
+                            $("#village").append("<option value='" + jo[i].VillageId + "'>" + jo[i].VillageName + "</option>");
+                        }
+                    }
+                },
+                failure: function (errMsg) {
+                    $("#village").empty();
+                    $("#village").append("<option value=''>請選擇縣市1</option>");
+                }
+            })
+        });
+    </script>
