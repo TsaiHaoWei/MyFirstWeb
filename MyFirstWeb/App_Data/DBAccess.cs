@@ -134,7 +134,9 @@ namespace DataBaseController
                 {
                     var insert = "Insert into Account values(@id,@account,@password,@city,@village,@address)";
                     SysConn.Execute(insert,a);
-                    return true;    
+                    return true;   
+                    
+
 
                 }
                 catch (Exception ex)
