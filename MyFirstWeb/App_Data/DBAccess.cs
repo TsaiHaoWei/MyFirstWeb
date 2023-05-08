@@ -67,6 +67,7 @@ namespace DataBaseController
                 catch (Exception ex)
                 {                    
                     throw ex;
+
                 }
 
             }
