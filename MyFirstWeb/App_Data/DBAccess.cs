@@ -95,7 +95,6 @@ namespace DataBaseController
         {
             try
             {
-
                 DynamicParameters parm = new DynamicParameters();
                 //intput
                 parm.Add("@Room", room, dbType: DbType.String);                
