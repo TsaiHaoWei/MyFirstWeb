@@ -94,6 +94,7 @@ namespace DataBaseController
             {
                 try
                 {
+
                     listCity = SysConn.Query<City>("SELECT * FROM City").ToList();
                     
                 }
