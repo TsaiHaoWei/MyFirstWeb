@@ -67,7 +67,7 @@ namespace DataBaseController
                 catch (Exception ex)
                 {                    
                     throw ex;
-
+                    
                 }
 
             }
@@ -88,83 +88,8 @@ namespace DataBaseController
 
             }
         }
-        public List<City> GetCity()
-        {
-            List<City> listCity = new List<City>();
-            using (SqlConnection SysConn = new SqlConnection(SysConnString))
-            {
-                try
-                {
-                    listCity = SysConn.Query<City>("SELECT * FROM City").ToList();
-                    
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            return listCity;
-
-        }
-        public List<Village> GetVillage(string id = "")
-        {
-            List<Village> list = new List<Village>();
-            using (SqlConnection SysConn = new SqlConnection(SysConnString))
-            {
-                try
-                {
-                    if (!string.IsNullOrEmpty(id))
-                        list = SysConn.Query<Village>("SELECT * FROM Village where id = @cityId", new { cityId = id }).ToList();
-                    else
-                        list = SysConn.Query<Village>("Select * From Village").ToList();
-
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            return list;
-          
-        }
-        public bool SetAccount(Account a)
-        {
-            using (SqlConnection SysConn = new SqlConnection(SysConnString))
-            {
-                try
-                {
-                    var insert = "Insert into Account values(@id,@account,@password,@city,@village,@address)";
-                    SysConn.Execute(insert,a);
-                    return true;   
-                    
-
-
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-        public bool GetAccount(string account,string password)
-        {
-            using (SqlConnection SysConn = new SqlConnection(SysConnString))
-            {
-                try
-                {
-                    var insert = "Select * From Account Where account = @acc and password = @pas";
-                    if (SysConn.QueryFirstOrDefault(insert, new { acc = account, pas = password })!=null)
-                        return true;
-                    else
-                        return false;
-
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
+     
+    
 
         public int StroreProcedure(string room)
         {

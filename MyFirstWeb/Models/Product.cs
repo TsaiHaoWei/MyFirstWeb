@@ -5,9 +5,10 @@ using System.Web;
 
 namespace MyFirstWeb.Models
 {
-    public class City
+    public class Product
     {
-        public string id { get; set; }
-        public string name { get; set; }
+        public string ProductID { get; set; }
+        public string ProductName { get; set; }
+
     }
 }

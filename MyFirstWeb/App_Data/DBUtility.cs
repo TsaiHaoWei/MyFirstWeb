@@ -11,13 +11,11 @@ namespace DataBaseController
 {
     public class DBUtility
     {
-        public static string AppPath = System.AppDomain.CurrentDomain.BaseDirectory;
         public static string SysConnectString = string.Empty;
         public static Dictionary<string, string> DBSetup()
-        {
-            
+        {            
            
-            Console.WriteLine("資料庫設定檔位置" + SystemParameterPath.iniFile);
+            Debug.WriteLine("資料庫設定檔位置" + SystemParameterPath.iniFile);
             Dictionary<string, string> DBKey = new Dictionary<string, string>();
             DBKey.Add("ServerName", ExternalFile.GetProfileString("SERVER", "ServerName", "DataServer", SystemParameterPath.iniFile));
             DBKey.Add("Database", ExternalFile.GetProfileString("SERVER", "Database", "DataServer", SystemParameterPath.iniFile));
