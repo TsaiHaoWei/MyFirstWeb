@@ -95,8 +95,10 @@ namespace DataBaseController
         {
             try
             {
-                // Bcoding Write CODE
-                // Bcoding Write CODE2
+
+
+                //* Maseter Combine
+
                 DynamicParameters parm = new DynamicParameters();
                 //intput
                 parm.Add("@Room", room, dbType: DbType.String);                
