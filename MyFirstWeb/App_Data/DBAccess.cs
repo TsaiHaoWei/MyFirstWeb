@@ -97,7 +97,7 @@ namespace DataBaseController
             {
 
 
-                //* Maseter Combine
+                //* Test B2
 
                 DynamicParameters parm = new DynamicParameters();
                 //intput
