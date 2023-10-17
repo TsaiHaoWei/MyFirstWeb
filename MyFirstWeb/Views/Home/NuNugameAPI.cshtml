@@ -1,0 +1,242 @@
+﻿@{
+    Layout = "~/Views/Shared/_GamingLayout.cshtml";
+    ViewBag.Title = "Game2";
+    var Productlist = ViewBag.Productlist;
+    var ProductMarketPricelist = ViewBag.ListMarketPrice;
+
+}
+@if (TempData["message"] != null)
+{
+    <script type="text/javascript">
+       var message = @Html.Raw(Json.Encode(TempData["message"]));
+       alert(message);
+    </script>
+}
+<form style="margin:auto" method="post" id="someForm">
+    <div id="main" class="container">
+        <header style="text-align:center">
+            <h2>Welcome to NuNugame API </h2>
+            <p>
+                Your Ultimate Price Search Website
+            </p>
+        </header>
+        <div class="row 200%">
+            <div class="7u 12u$(medium)">
+
+                <h3>Are you tired of endlessly scouring the internet for the best prices on your favorite products? Look no further! NuNugame is your go-to destination for quick and easy access to real-time market prices across a wide range of products. </h3>
+                <h3>Our platform offers a quick, simple, and intuitive way for you to easily view real-time market prices for various products. No more need to switch between different websites, and no more wasting time on price comparisons. NuNugame provides you with a centralized place to effortlessly find the best options.</h3>
+            </div>
+            <div class="5u 12u$(medium)">
+                <h2 id="Record">Record product price</h2>
+                <h3>Please write down product information in the following table</h3>
+                <div class="row uniform">
+
+                    <div class="9u 12u$(xsmall)">
+                        <input type="text" name="search_name" id="search_name" value="" placeholder="product name" />
+                    </div>
+                    <div class="3u$ 12u$(xsmall)">
+                        <ul class="actions">
+                            <li><input type="button" class="button special fit" value="Search" id="search" name="search" /></li>
+                        </ul>
+                    </div>
+                    <!-- Break -->
+                    <div class="12u$">
+                        <div class="select-wrapper">
+                            <select id="productnamesearch" name="productnamesearch">
+                                <option value="">- Product Name -</option>
+                                @foreach (var v in Productlist)
+                                {
+                                    <option value=@v.ProductID> @v.ProductName </option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="4u 12u$(xsmall)">
+                        <input type="text" name="Location" id="Location" value="" placeholder="location" />
+                    </div>
+                    <div class="4u 12u$(xsmall)">
+                        <input type="text" name="Capacity" id="Capacity" value="" placeholder="xg/單位(顆、粒)" />
+                    </div>
+                    <div class="4u$ 12u$(xsmall)">
+                        <input type="text" name="price" id="price" value="" placeholder="$" />
+                    </div>
+                    <div class="12u$">
+                        <ul class="actions fit">
+                            <li><input id="btnSubmit" type="submit" class="button special fit" value="Add in DB" /></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr>
+        <!-- Elements -->
+        <div class="row 200%">
+
+            <div class="5u 12u$(medium)">
+                <h2 id="Search">Search product price</h2>
+                <h3>Please select the product you want to inquire about.</h3>
+                <div class="row uniform">
+                    @*<div class="12u$">
+                            <input type="text" name="name" id="name" value="" placeholder="product name" />
+                        </div>*@
+
+                    <!-- Break -->
+                    <div class="12u$">
+                        <div class="select-wrapper">
+                            <select name="productname" id="productname">
+                                <option value="">- Product Name -</option>
+                                @foreach (var v in Productlist)
+                                {
+                                    <option value=@v.ProductID> @v.ProductName </option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="12u$">
+                        <ul class="actions fit">
+                            <li><input type="button" class="button special fit" name="SearchAPI" id="SearchAPI" value="SearchAPI" /></li>
+                        </ul>
+                    </div>
+                    <div class="12u$">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Loction</th>
+                                    <th>Price</th>
+                                    <th>Price/單位</th>
+                                </tr>
+                            </thead>
+                            <tbody name="tb" id="tb">
+                                @*@if (ProductMarketPricelist != null && ProductMarketPricelist.Count > 0)
+                                    {
+                                        foreach (var v in ProductMarketPricelist)
+                                        {
+                                            <tr>
+                                                <td>@v.ProductName</td>
+                                                <td>@v.Location</td>
+                                                <td>@v.Price</td>
+                                                <td>@v.Price_100g</td>
+                                            </tr>
+
+                                        }
+
+                                    }*@
+                            </tbody>
+                            @*<tfoot>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>100.00</td>
+                                    </tr>
+                                </tfoot>*@
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="7u 12u$(medium)">
+
+                <h3>Furthermore, our platform empowers users to actively contribute to the pricing ecosystem. Users can record and share prices they discover, creating a community-driven database of real-time price information. This collaborative approach ensures that the Internet of Things (IoT) data is updated with lightning speed, as users collectively pursue the most up-to-date and accurate pricing details.</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+    $("#btnSubmit").click(function (e) {
+        e.preventDefault();
+
+        var selectedOption = $("#productnamesearch option:selected").text();
+        // Add the selected drop down text to a hidden field
+        $("<input/>", { type: 'hidden', name: 'pName' }).val(selectedOption).appendTo("#someForm");
+        // now post the form
+        $("#someForm").submit();
+    });
+    $('#search').click(function () {
+        $('#productnamesearch').empty();
+        const searchproductname = $('#search_name').val();
+        console.log("search text:"+searchproductname);
+
+        //$('#labA').text("1234");
+        var productlist = @Html.Raw(Json.Encode(@ViewBag.Productlist));
+
+        console.log(productlist);
+        console.log(productlist.length);
+
+        for (var i = 0; i < productlist.length; i++) {
+            console.log(productlist[i].ProductName);
+            if (productlist[i].ProductName.includes(searchproductname)) {
+                $('#productnamesearch').append(" <option value='" + productlist[i].ProductId + "'>" + productlist[i].ProductName + "</option>")
+
+            }
+        }
+
+
+    });
+    $('#nextGame').click(function () {
+
+        var yourModel = '@Html.Raw(Json.Encode(Model))';
+        var member = JSON.parse(yourModel);
+        //alert(member[0].BodyList.length);
+        //alert(getRandom(member[0].BodyList.length));
+        //alert(member[0].PlayerID + " Please " + member[0].BodyList[getRandom(member[0].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1]);
+        for (var i = 0; i < member.length; i++){
+            if (i == 0)
+                $('#labA').text(member[0].BodyList[getRandom(member[0].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1])
+            else if (i == 1)
+                $('#labB').text(member[1].BodyList[getRandom(member[1].BodyList.length) - 1] + " touch " + member[1].ColorList[getRandom(member[1].ColorList.length) - 1])
+            else if (i == 2)
+                $('#labC').text(member[2].BodyList[getRandom(member[2].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1])
+            else if (i == 3)
+                $('#labD').text(member[3].BodyList[getRandom(member[3].BodyList.length) - 1] + " touch " + member[1].ColorList[getRandom(member[1].ColorList.length) - 1])
+
+        }
+
+    });
+    $('#SearchAPI').click(function(){
+        var searchvalue = $('#productname').val();
+        console.log(searchvalue);
+        var $table = $('#tb');
+        $table.html("");
+        $.ajax({
+            type: "Post",
+            url: "../Home/APIAjaxSearch?id=" + searchvalue,
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var plist = JSON.parse(data);
+                console.log(plist.length)
+                if (data != null) {
+                    var plist = JSON.parse(data);
+                    for (i = 0; i < plist.length; i++) {
+                        var $tr = $("<tr>" +
+                          "<td>"+plist[i].ProductName+"</td>"+
+                            "<td>" + plist[i].Location+"</td>"+
+                            "<td>" + plist[i].Price+"</td>"+
+                            "<td>" + plist[i].Price_100g+"</td>"+
+                            "</tr>");
+                        var $table = $('#tb');
+                        $table.append($tr);
+                    }
+                }
+            },
+            failure: function (errMsg) {
+                console.log(errMsg);
+            }
+
+        })
+    });
+    function getRandom(x) {
+        return Math.floor(Math.random() * x) + 1;
+    };
+</script>

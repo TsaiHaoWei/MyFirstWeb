@@ -12,14 +12,15 @@
     //    account = "Test";
     //}
 
-    //if (Session["account"] == null || string.IsNullOrWhiteSpace(Session["account"].ToString()))
-    //{
-    //    Response.Redirect("~/Home/Login");
-    //}
-    //else
-    //{
-    //    account = Session["account"].ToString();
-    //}
+    if (Session["LoginEmail"] == null || string.IsNullOrWhiteSpace(Session["LoginEmail"].ToString()))
+    {
+        Response.Redirect("~/Home/HomePage");
+    }
+    else
+    {
+        account = Session["LoginEmail"].ToString();
+    }
+
 }
 @model List<MyFirstWeb.Models.Player>
 <form style="margin:auto" method="post">
@@ -83,7 +84,7 @@
 
 
     });
-
+    s
 </script>
 
 

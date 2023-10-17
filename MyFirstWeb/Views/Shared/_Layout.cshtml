@@ -22,6 +22,7 @@
                 @Html.ActionLink("應用程式名稱", "Test", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
+                <nav>
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("註冊", "Index", "Home")</li>
                     <li>@Html.ActionLink("登入", "Login", "Home")</li>
@@ -32,12 +33,10 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()@*Layout中間有一行@RenderBody()這是Razor提供的方法，意思是所有套用這個Layout的頁面，它的內容會取代@RenderBody()。*@
+        @RenderBody()
+    @*Layout中間有一行@RenderBody()這是Razor提供的方法，意思是所有套用這個Layout的頁面，它的內容會取代@RenderBody()。*@
 
         <hr />
-        @*<footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-        </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")

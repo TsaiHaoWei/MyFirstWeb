@@ -18,7 +18,7 @@
     <div class="image-bg-4">
 
         <header id="header" class="alt">
-            <div class="logo"><a href="/Home/Test"> <span style="font-size:25px">NuNuGaming</span></a></div>
+            <div class="logo"><a href="/Home/Test"> <span style="font-size:25px"></span></a></div>
         </header>
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -28,15 +28,23 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
+                    @Html.ActionLink("NuNuGaming", "NuNuGaming", "Home", null, new { @class = "navbar-brand" })
+                    @Html.ActionLink("API MarketPrice", "Game2", "Home", null, new { @class = "navbar-brand" })
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("NuNuGaming", "NuNuGaming", "Home")</li>
-                        <li>@Html.ActionLink("遊戲二", "Game2", "Home")</li>
-                        @* <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>*@
+                <!-- Nav -->
+                <nav id="menu">
+                    <ul class="links">
+                        <li><a href="/Home/HomePage">SignOut</a></li>
                     </ul>
+                </nav>
+
+                @*<div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sign out", "HomePage", "Home")</li>
+                     <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
+                </ul>
                 </div>
+                *@
             </div>
         </div>
         <div class="container body-content">
@@ -44,14 +52,15 @@
             @*Layout中間有一行@RenderBody()這是Razor提供的方法，意思是所有套用這個Layout的頁面，它的內容會取代@RenderBody()。*@
 
             <hr />
-            @*<footer>
-                <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-            </footer>*@
+            <footer>
+                <p>&copy; @DateTime.Now.Year -MVC Project</p>
+            </footer>
         </div>
+    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @*   @RenderSection("scripts", required: false)*@
-      </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*   @RenderSection("scripts", required: false)*@
 </body>
 </html>

@@ -13,4 +13,22 @@ Views -> Shared 預設就會載入_Layout.cshtml當作主版頁面。
 Views -> Home index.cshtml，這也是MVC預設的首頁，可以在App_Start資料夾中的RouteConfig.cs檔案裡面改首頁
 
 Views Coding
+        傳輸方式後端傳至前端 
+        {
+           1.ViewBag
+           2.View(Model)
+        }
+        前傳至後端
+           {
+                 1. Parameter get
+                 2.FormCollection Parameter get
+                    string id = post["id"];
+                    string name = post["name"];
+                    int score = Convert.ToInt32(post["score"]);
+                 3. Model(userData) Parameter get 必須要先以後端傳USERMODEL過去
 
+                      <input type="text" value="@Model.account">
+                   <input type="password" value="@Model.password1">
+                   <input type="password" value="@Model.password2">
+                     public ActionResult Index(UserData user)
+        }

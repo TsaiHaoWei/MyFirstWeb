@@ -37,12 +37,13 @@ namespace DataBaseController
                 }
                 catch (Exception ex)
                 {
+                    DBUtility.Log(ex.ToString());
                     throw ex;
                 }
             }
             return bRet;
         }
-        public List<User> GetAccount()
+        public List<User> GetUser()
         {
             using (SqlConnection SysConn = new SqlConnection(SysConnString))
             {
@@ -50,12 +51,14 @@ namespace DataBaseController
                     return SysConn.Query<User>("Select * from [User]").ToList();
                 } catch (Exception ex)
                 {
+                    DBUtility.Log(ex.ToString());
+
                     throw ex;
                 }
                 
             }
         }
-        public bool SetAccount(User Acc)
+        public bool SetUser(User Acc)
         {
             using (SqlConnection SysConn = new SqlConnection(SysConnString))
             {
@@ -65,14 +68,16 @@ namespace DataBaseController
                     return true;
                 }
                 catch (Exception ex)
-                {                    
+                {    
+                    DBUtility.Log(ex.ToString());
+
                     throw ex;
                     
                 }
 
             }
         }
-        public bool UpdateAccount(User Acc)
+        public bool UpdateUser(User Acc)
         {
             using (SqlConnection SysConn = new SqlConnection(SysConnString))
             {
@@ -83,22 +88,106 @@ namespace DataBaseController
                 }
                 catch (Exception ex)
                 {
+                    DBUtility.Log(ex.ToString());
                     throw ex;
                 }
 
             }
         }
-     
-    
+        public List<PlayerItem> GetPlayerItem(string itemid)
+        {
+            using (SqlConnection SysConn = new SqlConnection(SysConnString))
+            {
+                try
+                {
+                    return SysConn.Query<PlayerItem>("Select * from PlayerItem Where PlayItem =@item", new { item = itemid}).ToList();
+                }
+                catch (Exception ex)
+                {
+                    DBUtility.Log(ex.ToString());
+
+                    throw ex;
+                }
+
+            }
+        }
+        public List<PlayerRecord> GetPlayerRecord()
+        {
+            using (SqlConnection SysConn = new SqlConnection(SysConnString))
+            {
+                try
+                {
+                    return SysConn.Query<PlayerRecord>("Select * from PlayerRecord").ToList();
+                }
+                catch (Exception ex)
+                {
+                    DBUtility.Log(ex.ToString());
+
+                    throw ex;
+                }
+
+            }
+        }
+        public bool SetPlayerRecord(PlayerRecord Acc)
+        {
+            using (SqlConnection SysConn = new SqlConnection(SysConnString))
+            {
+                try
+                {
+                    SysConn.Execute("Insert into [User] Values(@UserId,@UserName,@Password,@Email,@Address)", Acc);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    DBUtility.Log(ex.ToString());
+
+                    throw ex;
+
+                }
+
+            }
+        }
+        public bool UpdatePlayerRecord(PlayerRecord Acc)
+        {
+            using (SqlConnection SysConn = new SqlConnection(SysConnString))
+            {
+                try
+                {
+                    SysConn.Execute("update [User] Set Password = @Password where UserName = @UserName and Email = @Email", Acc);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    DBUtility.Log(ex.ToString());
+                    throw ex;
+                }
+
+            }
+        }
+
+        public bool SetAdvice(Advice advice)
+        {
+            using (SqlConnection SysConn = new SqlConnection(SysConnString))
+            {
+                try {
+                    SysConn.Execute("Insert into [Advice] Values(@name,@cellphone,@topic,@content,@date)", advice);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    DBUtility.Log(ex.ToString());
+                    throw ex;
+                }
+            }
+        }
+
+
 
         public int StroreProcedure(string room)
         {
             try
             {
-
-
-                //* Test B2
-
+                
                 DynamicParameters parm = new DynamicParameters();
                 //intput
                 parm.Add("@Room", room, dbType: DbType.String);                
@@ -111,8 +200,10 @@ namespace DataBaseController
                 }
                 return parm.Get<int>("@SeqNo");
             }
-            catch 
+            catch (Exception ex)
             {
+                DBUtility.Log(ex.ToString());
+
                 return -1;
             }
         }

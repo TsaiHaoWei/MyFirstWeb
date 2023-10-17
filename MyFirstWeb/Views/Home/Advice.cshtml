@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_GamingLayout.cshtml";
+
+}
+@if (TempData["message"] != null)
+{
+    <script type="text/javascript">
+       var message = @Html.Raw(Json.Encode(TempData["message"]));
+       alert(message);
+    </script>
+}
+<form style="margin:auto" method="post" id="someForm">
+    <div id="main" class="container">
+        <div class="row 200%">
+            <div class="6u 12u$(medium)">
+                <h2>個人資料填寫</h2>
+                <div class="row uniform">
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="name" id="name" value="" placeholder="name" />
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <input type="text" name="cellphone" id="cellphone" value="" placeholder="cellphone" />
+                    </div>
+                    <div class="4u 12u$(xsmall)">
+                        <h3>topic of divice:</h3>
+                    </div>
+                    <div class="8u$ 12u$(xsmall)">
+                        <input type="text" name="topic" id="topic" value="" placeholder="topic" />
+                    </div>
+                </div>
+            </div>
+            <div class="6u 12u$(medium)">
+                <div class="row uniform">
+                    <div class="12u$ 12u$(xsmall)">
+                        <h3>Content:</h3>
+                        <textarea name="Content" id="Content" cols="30" rows="5" placeholder="Content"></textarea>
+                    </div>
+                    <div class="4u$ 12u$(xsmall)">
+                        <ul class="actions">
+                            <li><input type="submit" class="button special fit" value="傳送" id="submit" name="submit" /></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

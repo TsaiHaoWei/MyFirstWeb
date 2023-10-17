@@ -1,0 +1,172 @@
+﻿@{
+    Layout = "~/Views/Shared/_GamingLayout.cshtml";
+    ViewBag.Title = "NuNu";
+
+
+
+
+    Random myObject = new Random();
+    var account = "";
+    //if (Session["account"] == null || string.IsNullOrWhiteSpace(Session["account"].ToString()))
+    //{
+    //    account = "Test";
+    //}
+
+    if (Session["LoginEmail"] == null || string.IsNullOrWhiteSpace(Session["LoginEmail"].ToString()))
+    {
+        Response.Redirect("~/Home/HomePage");
+    }
+    else
+    {
+        account = Session["LoginEmail"].ToString();
+    }
+
+}
+@model List<MyFirstWeb.Models.Player>
+<div id="main" class="container">
+
+    <div class="row 200%">
+        <div class="6u 12u$(medium)">
+            <h3>Form</h3>
+
+            <form method="post" action="#">
+                <div class="row uniform">
+                    <div class="6u 12u$(xsmall)">
+                        <input type="text" name="name" id="name" value="" placeholder="Name"/>
+                    </div>
+                    <div class="6u$ 12u$(xsmall)">
+                        <input type="email" name="email" id="email" value="" placeholder="Email" />
+                    </div>
+                    <!-- Break -->
+                    <div class="12u$">
+                        <div class="select-wrapper">
+                            <select name="category" id="category">
+                                <option value="standard">standard</option>
+                                <option value="kid">kid</option>
+                                <option value="hot">hot level</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Break -->
+                    <div class="4u 12u$(small)">
+                        <input type="radio" id="priority-low" name="priority" value="2" checked>
+                        <label for="priority-low">two player</label>
+                    </div>
+                    <div class="4u 12u$(small)">
+                        <input type="radio" id="priority-normal" name="priority" value="3">
+                        <label for="priority-normal">three player</label>
+                    </div>
+                    <div class="4u$ 12u$(small)">
+                        <input type="radio" id="priority-high" name="priority" value="4">
+                        <label for="priority-high">four player</label>
+                    </div>
+                    <!-- Break -->
+                    @*<div class="6u 12u$(small)">
+                            <input type="checkbox" id="copy" name="copy">
+                            <label for="copy">Email me a copy of this message</label>
+                        </div>
+                        <div class="6u$ 12u$(small)">
+                            <input type="checkbox" id="human" name="human" checked>
+                            <label for="human">I am a human and not a robot</label>
+                        </div>*@
+                    <!-- Break -->
+                    @*<div class="12u$">
+                            <textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+                        </div>*@
+                    <!-- Break -->
+                    <div class="12u$">
+                        <ul class="actions">
+                            <li><input type="submit" value="Start" /></li>
+                            <li><input type="button" value="Next" id="nextGame" /></li>
+                          @*  <li><input type="submit" value="Next" /></li>*@
+
+                        </ul>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+        <div class="6u 12u$(medium)">
+            @if (Model != null)
+            {
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <h2> @Model[i].PlayerID </h2>
+                    <h3>
+                        @if (i == 0)
+                        {
+                            <label class="labRequest" id="labA" name="labA">
+                                @Model[i].BodyList[myObject.Next(0, @Model[i].BodyList.Count)]
+                                touch   @Model[i].ColorList[myObject.Next(0, @Model[i].ColorList.Count)]
+                            </label>
+                        }
+                        @if (i == 1)
+                        {
+                            <label class="labRequest" id="labB" name="labB">
+                                @Model[i].BodyList[myObject.Next(0, @Model[i].BodyList.Count)]
+                                touch   @Model[i].ColorList[myObject.Next(0, @Model[i].ColorList.Count)]
+                            </label>
+                        }
+                        @if (i == 2)
+                        {
+                            <label class="labRequest" id="labC" name="labC">
+                                @Model[i].BodyList[myObject.Next(0, @Model[i].BodyList.Count)]
+                                touch   @Model[i].ColorList[myObject.Next(0, @Model[i].ColorList.Count)]
+                            </label>
+                        }
+                        @if (i == 3)
+                        {
+                            <label class="labRequest" id="labD" name="labD">
+                                @Model[i].BodyList[myObject.Next(0, @Model[i].BodyList.Count)]
+                                touch   @Model[i].ColorList[myObject.Next(0, @Model[i].ColorList.Count)]
+                            </label>
+                        }
+
+
+                    </h3>
+                }
+                @*foreach (var v in @Model)
+                {
+                    <h2> @v.PlayerID </h2>
+                    <label class="labRequest" id="labA" name="labA">
+                        @v.BodyList[myObject.Next(0, @v.BodyList.Count)]
+                        touch   @v.ColorList[myObject.Next(0, @v.ColorList.Count)]
+                    </label>
+                }*@
+
+
+            }
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#nextGame').click(function () {
+
+        var yourModel = '@Html.Raw(Json.Encode(Model))';
+        var member = JSON.parse(yourModel);
+        //alert(member[0].BodyList.length);
+        //alert(getRandom(member[0].BodyList.length));
+        //alert(member[0].PlayerID + " Please " + member[0].BodyList[getRandom(member[0].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1]);
+        $('#labA').text(member[0].BodyList[getRandom(member[0].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1])
+        $('#labB').text(member[1].BodyList[getRandom(member[1].BodyList.length) - 1] + " touch " + member[1].ColorList[getRandom(member[1].ColorList.length) - 1])
+        $('#labC').text(member[2].BodyList[getRandom(member[2].BodyList.length) - 1] + " touch " + member[0].ColorList[getRandom(member[0].ColorList.length) - 1])
+        $('#labD').text(member[3].BodyList[getRandom(member[3].BodyList.length) - 1] + " touch " + member[1].ColorList[getRandom(member[1].ColorList.length) - 1])
+
+    });
+
+
+
+
+    function getRandom(x) {
+        return Math.floor(Math.random() * x) + 1;
+    };
+</script>
+
+
+
+
+

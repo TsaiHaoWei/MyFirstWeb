@@ -1,0 +1,89 @@
+﻿
+
+
+
+
+        @{
+            ViewBag.Title = "BB Index Page";
+
+            Layout = null;
+
+            var cityList = ViewBag.CityList;
+            var VillageList = ViewBag.VillageList;
+            var Msg = ViewBag.Msg;
+        }
+        @model WebCode.Models.ViewModel.UserData
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+        <form style="margin:auto" method="post">
+            <h1>請輸入使用者資料</h1>
+            <div class="form-group">
+                <label for="exampleInputEmail1">註冊帳號</label>
+                <input type="text" class="form-control" id="Account" name="account" placeholder="輸入帳號" value="@Model.account">
+                <small id="emailHelp" class="form-text text-muted">請輸入英數字</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">新的密碼</label>
+                <input type="password" class="form-control" id="Password1" name="password1" placeholder="輸入密碼" value="@Model.password1">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">再次確認</label>
+                <input type="password" class="form-control" id="Password2" name="password2" placeholder="輸入密碼" value="@Model.password2">
+            </div>
+            <div class="form-group">
+                <label for="Address">地址</label>
+                <select id="city" name="city">
+                    <option value="@Model.city">全部</option>
+                    @foreach (var v in cityList)
+                    {
+                        <option value="@v.id">@v.name</option>
+                    }
+                </select>
+                <select id="village" name="village">
+                    <option value="@Model.village">城鎮</option>
+                </select>
+                <input type="text" class="form-control" id="Address" name="address" placeholder="輸入地址" value="@Model.address">
+            </div>
+            <button type="submit" class="btn btn-primary">確定</button>
+            <button type="reset" class="btn btn-warning">清除</button>
+            <button type="button" class="btn btn-danger" onclick="ReLogin()">取消</button>
+        </form>
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script>
+                function ReLogin() {
+                    location.href = "/Home/HomePage";
+                }
+        </script>
+        <script>
+                $("#city").change(function () {
+                    var value = $("#city").val();
+                    console.log(value);
+                    $.ajax({
+                        type: "Post",
+                        url: "../Home/Village?id=" + value,
+                        data: '{}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            $("#village").empty();
+                            if (data == "") {
+                                $("#village").append("<option value=''>請選擇縣市</option>");
+                            }
+                            else {
+                                var jo = JSON.parse(data);
+                                $("#village").append("<option value=''>請選擇</option>");
+                                for (i = 0; i < jo.length; i++) {
+                                    $("#village").append("<option value='" + jo[i].VillageId + "'>" + jo[i].VillageName + "</option>");
+                                }
+                            }
+                        },
+                        failure: function (errMsg) {
+                            $("#village").empty();
+                            $("#village").append("<option value=''>請選擇縣市1</option>");
+                        }
+                    })
+                });
+        </script>
