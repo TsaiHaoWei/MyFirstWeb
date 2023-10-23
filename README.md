@@ -4,6 +4,5 @@
 ## 系統架構說明
 ![image](https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/Project%20schedma.png)
 ### HomePage
-< center class ="half" > 
-  < img src ="https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/DB%20ER.png" width ="200" />< img src ="https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/DB%20ER.png" width ="200" /> 
-</ center >
+![image](https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/UI/homeoverview.png)![image](https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/UI/homeoverview1.png)![image](https://github.com/TsaiHaoWei/MyFirstWeb/blob/master/GitDocumnt/UI/homeoverview2.png)  
+
